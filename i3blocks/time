@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [ "$BLOCK_BUTTON" -eq "1" ]  ; then
+ notify-send "`date '+%A %B %d %Y %I:%M:%S %P'`"
+fi
+
+date '+%H:%M'

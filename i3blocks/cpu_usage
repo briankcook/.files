@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ "$BLOCK_BUTTON" -eq "1" ]  ; then
+ notify-send "`mpstat -u -P ALL 1 1 | awk 'NR>10{printf("%d% ", 100-int($NF))}' ; echo '\n' ; ps aux --sort=-%cpu | awk 'NR<11{print $3,$11}'`"
+fi
+
+echo -e `mpstat -u -P ALL 1 1 | awk 'NR>10{printf("\\\\u%x", 9601 + int((101 - $NF) / 15));} NR==11{print(" ");}'`
+
+

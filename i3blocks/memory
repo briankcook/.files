@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [ "$BLOCK_BUTTON" -eq "1" ]  ; then
+ notify-send "`free | awk 'NR==2{printf("%01.1f\% available\n", 100*$7/$2)}' ; ps aux --sort=-%mem | awk 'NR<11{print $4,$11}'`"
+fi
+
+free | awk 'NR==2{
+ total = int($2);
+ available = int($7);
+ pct = 100 * available / total;
+ green = 255;
+ red = 255;
+ if (pct < 50)
+  green = pct * 255 / 50;
+ else
+  red = (100 - pct) * 255 / 50;
+ printf("<span foreground=\"#%02x%02x00\">%01.1fG</span>",red , green, available / 1024 / 1024);
+}'

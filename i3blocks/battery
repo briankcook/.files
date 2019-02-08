@@ -1,0 +1,30 @@
+#!/bin/bash
+
+if [ "$BLOCK_BUTTON" -eq "1" ]  ; then
+ notify-send "`acpi | grep -v unavail | sed 's/Battery [0-9]://'`"
+fi
+
+echo -e `acpi | grep -v unavail | awk '{
+ ORS="";
+ print "<span foreground=\"#";
+ pct = int($4);
+ green = 255;
+ red = 255;
+ sub(/[,%]/,"",pct);
+ if (pct < 50)
+  green = pct * 255 / 50;
+ else
+  red = (100 - pct) * 255 / 50;
+ printf("%02x%02x00\">",red , green);
+ switch ($3) {
+  case "Charging,":
+   print "\\\\uf271";
+   break;
+  case "Discharging,":
+   print "\\\\uf272";
+   break;
+  default:
+   print "\\\\uf240";
+ }
+ print "</span>";
+}'`

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+code=f109
+display=eDP1
+active=#FFFFFF
+inactive=#666666
+
+if xrandr --listactivemonitors | grep -q $display ; then
+ case $BLOCK_BUTTON in
+  1) color=$inactive
+     xrandr --output $display --off ;;
+  *) color=$active ;;
+ esac
+else
+ case $BLOCK_BUTTON in
+  1) color=$active
+     xrandr --output $display --auto ;;
+  *) color=$inactive ;;
+ esac
+fi
+
+echo -e '<span foreground="'$color'">\u'$code'</span>'
